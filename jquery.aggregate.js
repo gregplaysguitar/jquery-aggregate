@@ -1,6 +1,7 @@
 /*
 
-jquery.aggregate.js by Greg Brown 2011. See http://gregbrown.co.nz/code/jquery-aggregate/ for details.
+jquery.aggregate.js by Greg Brown 2011. See 
+http://gregbrown.co.nz/code/jquery-aggregate/ for details.
 
 License information: http://gregbrown.co.nz/code/license/
 
