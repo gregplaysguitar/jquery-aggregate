@@ -1,5 +1,13 @@
 /*
 
+jquery.aggregate.js by Greg Brown 2011. See http://gregbrown.co.nz/code/jquery-aggregate/ for details.
+
+License information: http://gregbrown.co.nz/code/license/
+
+*/
+
+/*
+
 Find the aggregate of a certain property across a jquery element
 collection. Eg to find the maximum height of a group of elements:
 
