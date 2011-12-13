@@ -83,6 +83,8 @@ $.fn.normalize = (function(options){
             options.callback($(this), agg);
         });
     }
+
+    return this;
 });
 
 
