@@ -48,7 +48,7 @@ rows of 4 elements each:
 $('.elements').normalize({
     property: 'height',
     type: 'max',
-    per_row: 4,
+    per_row: $('.elements').parent().width(),
     callback: function(el, val) {
         el.css('paddingTop', val - el.height() + 'px');
     }
@@ -58,32 +58,61 @@ $('.elements').normalize({
 property: any callable jquery element property (default 'height') or 
       callable taking the element as its sole argument. 
 type: 'max' or 'min' (default 'max')
-per_row: number of elements in a row (default is to normalize all
-         elements as one)
+per_row: number of elements in a row as an int, or a width in pixels,
+         e.g. '300px'. (default is to normalize all elements as one)
 callback: used to apply the aggregate to each element. (default 
           is to use the same method specified in the property option. 
 
 */
 
 $.fn.normalize = (function(options){
-    var els, agg, 
-        options = $.extend({
-            property: 'height',
-            type: 'max',
-            per_row: this.length,
-            callback: function(el, val) {
-                el[options.property](val);
+    if (this.length) {
+        var els, agg, 
+            options = $.extend({
+                property: 'height',
+                type: 'max',
+                per_row: this.length,
+                callback: function(el, val) {
+                    el[options.property](val);
+                }
+            }, options);
+        
+        
+        function row_item_count(items) {
+            /* Get the number of items in the row - either the static per_row value, 
+               or the number of items that can be fitted within the per_row width. */ 
+            if (typeof options.per_row === 'string' && options.per_row.slice(-2) === 'px') {
+                var j = 0,
+                    width = items.eq(0).outerWidth(true);
+                
+                while (width <= parseInt(options.per_row) && j < items.length) {
+                    if (j + 1 < items.length) {
+                        width += items.eq(j + 1).outerWidth(true);
+                    }
+                    j++;
+                }
+                
+                // at least one item per row, regardless of its length
+                return Math.max(j, 1);
             }
-        }, options);
-
-    for (var i = 0; i < this.length; i += options.per_row) {
-        els = this.slice(i, i + options.per_row);
-        agg = els.aggregate(options.property, options.type);
-        els.each(function() {
-            options.callback($(this), agg);
-        });
+            else {
+                return options.per_row;
+            }
+        };
+        
+        var i = 0,
+            items_per_row;
+        while (i < this.length) {
+            items_per_row = row_item_count(this.slice(i));
+            
+            els = this.slice(i, i + items_per_row);
+            agg = els.aggregate(options.property, options.type);
+            els.each(function() {
+                options.callback($(this), agg);
+            });
+            i += items_per_row;
+        }
     }
-
     return this;
 });
 
