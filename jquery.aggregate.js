@@ -73,7 +73,7 @@ $.fn.normalize = (function(options){
                 type: 'max',
                 per_row: this.length,
                 callback: function(el, val) {
-                    el[options.property](val);
+                    el.css((options.property === 'height' ? 'minHeight' : options.property), val + 'px');
                 }
             }, options);
         
