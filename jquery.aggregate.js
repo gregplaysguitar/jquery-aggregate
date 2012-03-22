@@ -14,11 +14,22 @@ collection. Eg to find the maximum height of a group of elements:
 
 $('.elements').aggregate('height', 'max');
 
+to find the sum of the heights of a group of elements:
+
+$('.elements').aggregate('height', function() {
+    var sum = 0;
+    for (var i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+    }
+    return sum;
+});
+
 
 property: any callable jquery element property, eg. 'height',
-      'outerWidth', 'scrollTop' etc, or callable taking the element
+      'outerWidth', 'scrollTop' etc, or a callable taking the element
       as its sole argument. 
-type: 'max' or 'min'
+type: 'max', 'min', or a callable taking a variable number of arguments
+      to be aggregated
 
 
 */
@@ -34,7 +45,12 @@ $.fn.aggregate = (function(property, type){
             return $(this)[property]();
         });
     }
-    return Math[type].apply(null, values.get());
+    if (typeof type === 'function') {
+        return type.apply(null, values.get());    
+    }
+    else {
+        return Math[type].apply(null, values.get());
+    }
 });
 
 
@@ -57,7 +73,8 @@ $('.elements').normalize({
 
 property: any callable jquery element property (default 'height') or 
       callable taking the element as its sole argument. 
-type: 'max' or 'min' (default 'max')
+type: 'max', 'min', or a callable taking a variable number of 
+      arguments to be aggregated (default 'max')
 per_row: number of elements in a row as an int, or a width in pixels,
          e.g. '300px'. (default is to normalize all elements as one)
 callback: used to apply the aggregate to each element. (default 
