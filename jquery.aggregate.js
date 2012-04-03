@@ -64,7 +64,7 @@ rows of 4 elements each:
 $('.elements').normalize({
     property: 'height',
     type: 'max',
-    per_row: $('.elements').parent().width(),
+    per_row: $('.elements').parent().width() + 'px',
     callback: function(el, val) {
         el.css('paddingTop', val - el.height() + 'px');
     }
