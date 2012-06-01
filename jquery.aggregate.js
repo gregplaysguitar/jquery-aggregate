@@ -14,21 +14,21 @@ collection. Eg to find the maximum height of a group of elements:
 
 $('.elements').aggregate('height', 'max');
 
-to find the sum of the heights of a group of elements:
+to find the first non-zero height from a group of elements:
 
 $('.elements').aggregate('height', function() {
-    var sum = 0;
     for (var i = 0; i < arguments.length; i++) {
-        sum += arguments[i];
+        if (arguments[i]) {
+            return arguments[i];
+        }
     }
-    return sum;
 });
 
 
 property: any callable jquery element property, eg. 'height',
       'outerWidth', 'scrollTop' etc, or a callable taking the element
       as its sole argument. 
-type: 'max', 'min', or a callable taking a variable number of arguments
+type: 'max', 'min', 'sum', or a callable taking a variable number of arguments
       to be aggregated
 
 
@@ -45,7 +45,14 @@ $.fn.aggregate = (function(property, type){
             return $(this)[property]();
         });
     }
-    if (typeof type === 'function') {
+    if (type === 'sum') {
+        var sum = 0;
+        for (var i = 0; i < values.length; i++) {
+            sum += values[i];
+        }
+        return sum;
+    }
+    else if (typeof type === 'function') {
         return type.apply(null, values.get());    
     }
     else {
