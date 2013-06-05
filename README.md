@@ -35,4 +35,4 @@ Make a group of elements all the same height as the highest, arranged in rows of
 
 ### Get the code
 
-[Download jquery.aggregate.js](https://gist.github.com/gists/1412995/download), or see <http://gist.github.com/1412995> for details.
+[Download jquery.aggregate.js](https://github.com/gregplaysguitar/jquery-aggregate/archive/master.zip), or see <https://github.com/gregplaysguitar/jquery-aggregate> for details.
