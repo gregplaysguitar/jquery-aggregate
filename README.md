@@ -33,12 +33,13 @@ Make a group of elements all the same height as the highest, arranged in rows of
     });
 
 
+### Get the code
+
+[Download jquery.aggregate.js](https://github.com/gregplaysguitar/jquery-aggregate/archive/master.zip), or see <https://github.com/gregplaysguitar/jquery-aggregate> for details.
+
+
 ### TODO
 
 - Bind `this` to the property callback
 
 
-
-### Get the code
-
-[Download jquery.aggregate.js](https://github.com/gregplaysguitar/jquery-aggregate/archive/master.zip), or see <https://github.com/gregplaysguitar/jquery-aggregate> for details.
