@@ -27,7 +27,9 @@ $('.elements').aggregate('height', function() {
 
 property: any callable jquery element property, eg. 'height',
       'outerWidth', 'scrollTop' etc, or a callable taking the element
-      as its sole argument. 
+      as its sole argument, or an array where the first item is the callable
+      and subsequent items are the arguments to be passed, i.e. 
+      `['outerHeight', true]`. 
 type: 'max', 'min', 'sum', or a callable taking a variable number of arguments
       to be aggregated
 
@@ -41,8 +43,11 @@ $.fn.aggregate = (function(property, type){
         });
     }
     else {
+        if (typeof property === 'string') {
+            property = [property];
+        }
         var values = this.map(function () {
-            return $(this)[property]();
+            return $(this)[property[0]].apply($(this), property.slice(1));
         });
     }
     if (type === 'sum') {
