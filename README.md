@@ -3,9 +3,10 @@ optional grouping into rows when normalizing. Normalization is useful for arrang
 
 ### Examples
 
-Find the maximum height out of a group of elements:
+Aggregate some properties from a group of elements:
 
-    $('.elements').aggregate('height', 'max');
+    var max_height = $('.elements').aggregate('height', 'max');
+    var total_width = $('.elements').aggregate(['outerWidth', true], 'sum');
 
 Make all elements in a collection the same height as the highest:
 
