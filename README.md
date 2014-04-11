@@ -1,7 +1,7 @@
 This plugin is used to normalize or aggregate a certain property across a jquery 
 element collection, with optional grouping into rows when normalizing. 
 
-## `$(...).aggregate(property, type)`
+### `$(...).aggregate(property, type)`
 
 Finds a property aggregate – for example the maximum height – from a 
 jquery collection of elements. Takes two required arguments:
@@ -24,7 +24,7 @@ For example:
         return el.outerWidth(true);
     }, 'sum');
 
-## `$(...).normalize(options)`
+### `$(...).normalize(options)`
 
 Normalizes a collection of elements, for example making them all the same height. 
 Takes one optional `options` argument.
