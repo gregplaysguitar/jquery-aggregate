@@ -125,7 +125,7 @@ $.fn.normalize = (function(options){
                 return Math.max(j, 1);
             }
             else {
-                return options.per_row || items.length;
+                return options.per_row;
             }
         };
         
