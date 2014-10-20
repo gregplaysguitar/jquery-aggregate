@@ -96,21 +96,38 @@ callback: used to apply the aggregate to each element. (default
 
 $.fn.normalize = (function(options){
     if (this.length) {
-        var els, agg, 
+        var els, agg,
+            // assume all have the same box-sizing & padding
+            border_box = (this.css('box-sizing') === 'border-box'),
             options = $.extend({
                 property: 'height',
                 type: 'max',
                 per_row: this.length,
                 callback: function(el, val) {
-                    el.css((options.property === 'height' ? 'minHeight' : options.property), val + 'px');
+                    if (options.property === 'height') {
+                        var prop = 'minHeight',
+                            padding = parseInt(el.css('paddingTop')) + 
+                                      parseInt(el.css('paddingBottom'));
+                    }
+                    else {
+                        var prop = options.property;
+                        
+                        if (prop === 'width') {
+                            var padding = parseInt(el.css('paddingLeft')) + 
+                                          parseInt(el.css('paddingRight'));
+                        }
+                    }
+                    el.css(prop, val + (border_box ? padding : 0) + 'px');
                 }
             }, options);
         
         
         function row_item_count(items) {
-            /* Get the number of items in the row - either the static per_row value, 
-               or the number of items that can be fitted within the per_row width. */ 
-            if (typeof options.per_row === 'string' && options.per_row.slice(-2) === 'px') {
+            /* Get the number of items in the row - either the static per_row 
+               value, or the number of items that can be fitted within the 
+               per_row width. */ 
+            if (typeof options.per_row === 'string' && 
+                options.per_row.slice(-2) === 'px') {
                 var j = 0,
                     width = items.eq(0).outerWidth(true);
                 
